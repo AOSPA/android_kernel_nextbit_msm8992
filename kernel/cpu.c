@@ -489,6 +489,15 @@ int __cpuinit cpu_up(unsigned int cpu)
 	}
 
 	err = _cpu_up(cpu, 0);
+	if (!err) {
+		struct device *cpu_device;
+		cpu_device = get_cpu_device(cpu);
+		if (!cpu_device)
+			pr_err("%s: failed to get cpu%d device\n",
+				   __func__, cpu);
+		else
+			kobject_uevent(&cpu_device->kobj, KOBJ_ONLINE);
+	}
 
 out:
 	cpu_maps_update_done();
@@ -561,7 +570,14 @@ void __ref enable_nonboot_cpus(void)
 	for_each_cpu(cpu, frozen_cpus) {
 		error = _cpu_up(cpu, 1);
 		if (!error) {
+            struct device *cpu_device;
 			printk(KERN_INFO "CPU%d is up\n", cpu);
+			cpu_device = get_cpu_device(cpu);
+			if (!cpu_device)
+				pr_err("%s: failed to get cpu%d device\n",
+					   __func__, cpu);
+			else
+				kobject_uevent(&cpu_device->kobj, KOBJ_ONLINE);
 			continue;
 		}
 		printk(KERN_WARNING "Error taking CPU%d up: %d\n", cpu, error);

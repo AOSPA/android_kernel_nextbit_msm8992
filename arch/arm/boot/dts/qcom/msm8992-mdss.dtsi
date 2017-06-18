@@ -101,6 +101,7 @@
 		qcom,mdss-ad-off = <0x0079000>;
 		qcom,mdss-has-decimation;
 		qcom,mdss-has-rotator-downscale;
+        qcom,mdss-idle-power-collapse-enabled; // TheCrazyLex@PA: Save power when there are no new frame updates on the screen
 		qcom,mdss-wfd-mode = "intf";
 		qcom,mdss-has-source-split;
 		qcom,mdss-has-dst-split;

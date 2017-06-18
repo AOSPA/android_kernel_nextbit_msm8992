@@ -335,6 +335,7 @@ clean_up:
 	kfree(tmpbuf);
 unlock:
 	mutex_unlock(&(dev_data->file_mutex));
+
 	return retval;
 }
 
