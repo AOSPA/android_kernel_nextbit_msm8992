@@ -1582,7 +1582,6 @@ int fih_get_now_temp(void)
 {
 	int unused;
 	update_sram_data(fih_chip, &unused);
-	msleep(50);
 
 	return get_sram_prop_now(fih_chip, FG_DATA_BATT_TEMP);
 }
